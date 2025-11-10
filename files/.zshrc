@@ -66,24 +66,25 @@ setopt SHARE_HISTORY             # Share history between all sessions.
 # aliases
 alias c="clear"
 alias duu="du --max-depth=1 -h"
-alias l="eza -ahl"
+alias l="eza -ahlsnew"
 alias ls="eza"
 alias lsblk="lsblk -o NAME,FSTYPE,SIZE,FSUSED,LABEL,MOUNTPOINT,RM,RO,UUID"
 alias tree='tree -a -I .git'
 # alias v="nvim"
 alias k="kubectl"
 alias open="xdg-open"
-alias rm="rm -i"
+alias rm='rmtrash'
+alias rmdir='rmdirtrash'
 
 # git
 alias g="git"
 alias gs="git status"
 alias ga="git add -A"
 alias gc="git commit"
-alias gp="git push origin master"
+alias gp="git push"
 
 # lfs
-export LFS=/mnt/lfs
+# export LFS=/mnt/lfs
 
 
 # path=('/home/leo/.local/bin' $path)
@@ -115,16 +116,20 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # autojump
 [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
+eval "$(direnv hook zsh)"
+
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#727169,bold,underline"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
 # Load plugins.
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.p10k.zsh
-source ~/.kbd.zsh
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 function v(){
   if [ -d "$1" ]; then
@@ -142,4 +147,13 @@ function edit(){
     return
   fi
   cd "/home/leo/.setup/dotfiles/$1" &> /dev/null || echo "no dir $1 in .setup"
+}
+
+# Yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
 }

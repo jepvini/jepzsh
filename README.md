@@ -12,3 +12,10 @@ simply run the `copy.sh` to move all the files in your home dir
 - `.p10k.zsh` my `p10k` theme
 - `.zlogin` used for managing the `$PATH`
 - `.zshrc` main zsh file
+
+### Dependencies
+
+- eza
+- fzf
+- git
+- zsh

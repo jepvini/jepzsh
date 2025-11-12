@@ -71,10 +71,11 @@ alias ls="eza"
 alias lsblk="lsblk -o NAME,FSTYPE,SIZE,FSUSED,LABEL,MOUNTPOINT,RM,RO,UUID"
 alias tree='tree -a -I .git'
 # alias v="nvim"
-alias k="kubectl"
+# alias k="kubectl"
 alias open="xdg-open"
 alias rm='rmtrash'
 alias rmdir='rmdirtrash'
+alias ssh='kitten ssh'
 
 # git
 alias g="git"
@@ -86,14 +87,6 @@ alias gp="git push"
 # lfs
 # export LFS=/mnt/lfs
 
-
-# path=('/home/leo/.local/bin' $path)
-# path=('/home/leo/.local/appimages' $path)
-# path=('/home/leo/ardu/ardupilot/Tools/autotest' $path)
-# path=('/usr/lib/ccache/bin' $path)
-#
-# # export to sub-processes (make it inherited by child processes)
-# export PATH
 
 # if [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ] ; then
 #   exec ssh-agent sway
@@ -113,10 +106,8 @@ autoload -U compinit; compinit
 source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
-# autojump
-[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
-
 eval "$(direnv hook zsh)"
+eval "$(zoxide init zsh)"
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#727169,bold,underline"
